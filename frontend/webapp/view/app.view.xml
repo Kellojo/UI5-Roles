@@ -1,0 +1,30 @@
+<mvc:View
+	controllerName="com.app.controller.app"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    height="100%"
+    width="100%"
+    id="idAppView">
+
+    <html:div>
+
+        <Page title="UI5 Roles App">
+            <customHeader>
+                
+            </customHeader>
+                
+
+            <content>
+                <App id="idApp">
+                    <pages></pages>
+                </App>
+
+                <VBox id="idErrorMessageContainer" class="app-errorMessageContainer"/>
+            </content>
+
+        </Page>
+    </html:div>
+
+</mvc:View>

@@ -1,0 +1,52 @@
+{
+
+    "sap.ui5": {
+
+        "models": {
+            "userModel": {
+                "type": "sap.ui.model.json.JSONModel"
+            },
+            "device": {
+                "type": "sap.ui.model.json.JSONModel"
+            },
+            "appHeader": {
+                "type": "sap.ui.model.json.JSONModel"
+            }
+        },
+        
+        "rootView": {
+            "viewName": "com.app.view.app",
+            "type": "XML",
+            "async": true
+        },
+
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewPath": "com.app.view",
+                "viewType": "XML",
+                "async": true,
+                "transition": "slide",
+                "controlId": "idApp",
+                "controlAggregation": "pages",
+                "bypassed": {
+                    "target": "notFound"
+                }
+            },
+
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "notFound",
+                    "target": "notFound"
+                }
+            ],
+
+            "targets": {
+                "notFound": {
+                    "viewName": "notFound"
+                }
+            }
+        }
+    }
+}

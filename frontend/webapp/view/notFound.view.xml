@@ -1,0 +1,21 @@
+<mvc:View
+	controllerName="com.app.controller.notFound"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    height="100%"
+    width="100%">
+
+    <html:div>
+
+        <Page>
+
+            <content>
+                <Text text="Ouch! Could not find the view you were looking for :("/>
+            </content>
+
+        </Page>
+    </html:div>
+
+</mvc:View>

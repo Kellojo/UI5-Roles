@@ -1,0 +1,22 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "FE-run-local": "http-server ./webapp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kellojo/UI5-Roles.git"
+  },
+  "author": "Kellojo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kellojo/UI5-Roles/issues"
+  },
+  "homepage": "https://github.com/Kellojo/UI5-Roles#readme",
+  "dependencies": {
+    "http-server": "^0.11.1"
+  }
+}

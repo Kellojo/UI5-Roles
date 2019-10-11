@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>UI5 Roles App</title>
+		<meta charset="UTF-8">
+		<meta name="description" content="A simple firebase, UI5 roles/user management app">
+		<meta name="keywords" content="UI5 Roles App">
+		<meta name="author" content="Kellojo (https://github.com/Kellojo)">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        
+        <!-- iOS Home Screen Settings -->
+        <meta name="apple-mobile-web-app-title" content="UI5 Roles App">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="transparent">
+        <link rel="apple-touch-icon" href="/img/_74x74.png">
+
+        <!-- Firebase Script -->
+        <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+
+        <!-- Open UI5 Bootstrap -->
+        <script 
+            src="https://openui5.hana.ondemand.com/1.60.1/resources/sap-ui-core.js" 
+            id="sap-ui-bootstrap" 
+            data-sap-ui-theme="sap_belize"
+            data-sap-ui-libs="sap.m"
+            data-sap-ui-compatVersion="edge"
+            data-sap-ui-preload="async"
+            data-sap-ui-async="true"
+            data-sap-ui-resourceroots='{
+                "com.app": "./",
+                "kellojo.m": "./lib/kellojo/m"
+            }' >
+        </script>
+        <script type="text/javascript">
+            sap.ui.getCore().attachInit(function () {
+                new sap.ui.core.ComponentContainer({
+                    name: "com.app",
+                    manifest: true,
+                    height: "100%",
+                    id: "mainComponent"
+                }).placeAt("content");
+            });
+        </script>
+
+        <link rel="stylesheet" type="text/css" href="style/style.css">
+    </head>
+    
+    <body class="sapUiBody sapUiSizeCompact" id="content"></body>
+</html>
