@@ -21,7 +21,9 @@ sap.ui.define([
                         type: "sap.ui.core.Control",
                         multiple: true
                     }
-                }
+                },
+
+                defaultAggregation: "content"
             },
 
             init: function() {

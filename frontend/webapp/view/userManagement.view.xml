@@ -11,6 +11,34 @@
 
     <k:Page title="User Management" subTitle="Manage all Users">
         
+
+        <Table items="{
+                path: '/users',
+                sorter: {
+                    path: 'firstName'
+                }
+            }">
+            <columns>
+                <Column>
+                    <Text text="User"/>
+                </Column>
+                <Column minScreenWidth="Tablet">
+                    <Text text="Roles"/>
+                </Column>
+                
+                <Column minScreenWidth="Desktop">
+                    <Text text="Last modified"/>
+                </Column>
+            </columns>
+
+            <items>
+                <k:UserColumnItem firstName="" />
+            </items>
+        </Table>
+
+
+
+
     </k:Page>
 
 </mvc:View>
