@@ -10,12 +10,8 @@
 
     <html:div>
 
-        <Page title="UI5 Roles App">
-            <customHeader>
+        <Page showHeader="false">
                 
-            </customHeader>
-                
-
             <content>
                 <App id="idApp">
                     <pages></pages>

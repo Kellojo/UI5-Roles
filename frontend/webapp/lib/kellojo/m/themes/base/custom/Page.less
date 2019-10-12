@@ -1,0 +1,46 @@
+
+
+.kellojoM-page {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: auto;
+    
+
+    .kellojoM-page-header {
+        flex-grow: 0;
+        position: sticky;
+        top: 0px;
+
+        padding: @defaultPadding 2 * @defaultPadding;
+
+        background-color: #fafafa;
+
+        display: flex;
+        flex-direction: row;
+
+        >div {
+            flex-grow: 1;
+        }
+
+        .kellojoM-page-header-title {
+            display: flex;
+            flex-direction: column;
+
+            .kellojoM-page-header-title-text {
+                font-size: @titleFontSize;
+                margin-bottom: @lineSpacing
+            }
+        }
+    }
+
+    .kellojoM-page-content {
+        flex-grow: 1;
+
+        padding: @defaultPadding 2 * @defaultPadding;
+    }
+    
+}

@@ -36,6 +36,11 @@
 
             "routes": [
                 {
+                    "pattern": "userManagement",
+                    "name": "userManagement",
+                    "target": "userManagement"
+                },
+                {
                     "pattern": "",
                     "name": "notFound",
                     "target": "notFound"
@@ -43,6 +48,9 @@
             ],
 
             "targets": {
+                "userManagement": {
+                    "viewName": "userManagement"
+                },
                 "notFound": {
                     "viewName": "notFound"
                 }

@@ -38,7 +38,13 @@ sap.ui.define([
 
         //init firebase
         firebase.initializeApp({
-
+            apiKey: "AIzaSyA0HD4i38wataaEQZqwG7EiTIj2thUuavk",
+            authDomain: "ui5-roles.firebaseapp.com",
+            databaseURL: "https://ui5-roles.firebaseio.com",
+            projectId: "ui5-roles",
+            storageBucket: "ui5-roles.appspot.com",
+            messagingSenderId: "497695678668",
+            appId: "1:497695678668:web:59c15bd65518674ee5a269"
         });
 
         //init beans

@@ -1,0 +1,31 @@
+.kellojoM-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+.kellojoM-page .kellojoM-page-header {
+  flex-grow: 0;
+  position: sticky;
+  top: 0px;
+  padding: 1rem 2rem;
+  background-color: #fafafa;
+  display: flex;
+  flex-direction: row;
+}
+.kellojoM-page .kellojoM-page-header > div {
+  flex-grow: 1;
+}
+.kellojoM-page .kellojoM-page-header .kellojoM-page-header-title {
+  display: flex;
+  flex-direction: column;
+}
+.kellojoM-page .kellojoM-page-header .kellojoM-page-header-title .kellojoM-page-header-title-text {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+.kellojoM-page .kellojoM-page-content {
+  flex-grow: 1;
+  padding: 1rem 2rem;
+}
