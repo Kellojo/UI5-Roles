@@ -15,7 +15,7 @@ sap.ui.define([
         this.m_oErrorMessageContainer = this.getView().byId("idErrorMessageContainer");
 
         var oComponent = this.getOwnerComponent();
-        //oComponent.m_oErrorMessageContainer = this.m_oErrorMessageContainer;
+        oComponent.m_oErrorMessageContainer = this.m_oErrorMessageContainer;
     };
 
     return Controller;

@@ -89,5 +89,19 @@ sap.ui.define([
         return !!firebase.auth().currentUser;
     };
 
+    // -----------------------------
+    // User Management Functions
+    // -----------------------------
+
+    /**
+     * Reads all available users (in chunks of 1000 users)
+     * @param {object} oRequest
+     * @public
+     */
+    ManagerProto.readAllUsers = function(oRequest) {
+        oRequest.url = "users";
+        this.getOwnerComponent().getRestClient().getRequest(oRequest);
+    };
+
     return Manager;
 });

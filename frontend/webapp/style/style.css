@@ -29,3 +29,33 @@
   flex-grow: 1;
   padding: 1rem 2rem;
 }
+.kellojoM-tableActions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border: 1px solid #e5e5e5;
+  border-bottom: none;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.kellojoM-tableActions .kellojoM-tableActions-left,
+.kellojoM-tableActions .kellojoM-tableActions-righ {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sapMList {
+  border: 1px solid #e5e5e5;
+}
+.sapMList .sapMListShowSeparatorsAll .sapMLIBShowSeparator:first-child > td {
+  border-top: none;
+}
+.sapMList .sapMListShowSeparatorsAll .sapMLIBShowSeparator:last-child > td {
+  border-bottom: none;
+}
+.sapMList .sapMListItems .sapMListTblCell {
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+}

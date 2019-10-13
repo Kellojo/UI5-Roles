@@ -11,8 +11,23 @@
 
     <k:Page title="User Management" subTitle="Manage all Users">
         
+        <k:TableActions>
+            <k:left>
+                <Label text="{ parts: [
+                        'i18n>userManagement-TableActionsText',
+                        '/userCount'
+                    ],
+                    formatter: 'jQuery.sap.formatMessage'}"
+                />
+            </k:left>
 
-        <Table items="{
+            <k:right>
+                <Button icon="sap-icon://refresh" type="Transparent" press="loadUsers"/>
+            </k:right>
+
+        </k:TableActions>
+
+        <Table busy="{/isLoadingUsers}" itemPress="onUserItemPress" items="{
                 path: '/users',
                 sorter: {
                     path: 'firstName'
@@ -29,10 +44,19 @@
                 <Column minScreenWidth="Desktop">
                     <Text text="Last modified"/>
                 </Column>
+                <Column minScreenWidth="Desktop">
+                    <Text text="Created"/>
+                </Column>
             </columns>
 
             <items>
-                <k:UserColumnItem firstName="" />
+                <ColumnListItem type="Active">
+                    <Link text="{email}"/>
+                    <k:RolesDisplay roles="{}"/>
+                    <Label text="{creationTime}"/>
+                    <Label text="{creationTime}"/>
+				</ColumnListItem>
+                
             </items>
         </Table>
 

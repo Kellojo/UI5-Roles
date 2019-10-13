@@ -1,0 +1,22 @@
+
+
+.sapMList {
+    border: 1px solid @borderGrey;
+
+    .sapMListShowSeparatorsAll {
+        .sapMLIBShowSeparator:first-child>td {
+            border-top: none;
+        }
+
+        .sapMLIBShowSeparator:last-child>td {
+            border-bottom: none;
+        }
+    }
+
+    .sapMListItems {
+        .sapMListTblCell {
+            padding-top: @smallerPadding !important;
+            padding-bottom: @smallerPadding !important;
+        }
+    }
+}

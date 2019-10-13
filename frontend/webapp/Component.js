@@ -5,11 +5,12 @@ sap.ui.define([
     "sap/m/MessageStrip",
     "sap/ui/Device",
     "sap/ui/model/json/JSONModel",
+    "sap/ui/model/resource/ResourceModel",
 
     "com/app/manager/Config",
     "com/app/manager/RestClient",
     "com/app/manager/UserManager"
-], function (jQuery, UIComponent, MessageStrip, Device, JSONModel, Config, RestClient) {
+], function (jQuery, UIComponent, MessageStrip, Device, JSONModel, ResourceModel, Config, RestClient) {
     "use strict";
 
     var Component = UIComponent.extend("com.app.Component", {
@@ -28,9 +29,6 @@ sap.ui.define([
 
     ComponentProto.RestClient = RestClient;
     ComponentProto.ID_ERROR_MESSAGE_CONTAINER = "idErrorMessageContainer";
-    ComponentProto.SHARED_DIALOGS = {
-        
-    };
 
     ComponentProto.init = function () {
         UIComponent.prototype.init.apply(this, arguments);
@@ -64,16 +62,19 @@ sap.ui.define([
 
         //create shared dialogs
         this.m_oDialogs = {};
-        for (var key in this.SHARED_DIALOGS) {
+        for (var key in Config.SHARED_DIALOGS) {
             this.m_oDialogs[key] = {
                 view: this.runAsOwner(function (sView) {
                     return sap.ui.xmlview(sView);
-                }.bind(this, this.SHARED_DIALOGS[key].view))
+                }.bind(this, Config.SHARED_DIALOGS[key].view))
             };
         }
 
-        //set device model
+        //set device & i18n model
         this.setModel(new JSONModel(Device), "device");
+        this.setModel(new ResourceModel({
+            bundleName: "com.app.i18n.i18n"
+         }), "i18n");
 
         //init app header model
         this.setModel(new JSONModel({
@@ -152,11 +153,11 @@ sap.ui.define([
         });
     };
 
-    ComponentProto.openDialogXYZ = function (oSettings) {
+    ComponentProto.openUserManagementDialog = function (oSettings) {
         oSettings = jQuery.extend(oSettings, {
-            submitButton: true
+            
         });
-        this.openDialog("DialogConfigKeyXYZ", oSettings);
+        this.openDialog("userManagementDialog", oSettings);
     };
 
 
