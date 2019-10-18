@@ -1,11 +1,12 @@
 /**
- * Handles /space/ requests
+ * Handles /users/ requests
  * 
  * @author Daniel Fritz 
  */
 
 const admin = require("firebase-admin")
 const express = require("express") 
+const rolesController = require("../controller/Roles")
 var router = express.Router();
 
 
@@ -28,6 +29,15 @@ router.get("/", async (request, response, next) => {
             creationTime: oUser.metadata.creationTime,
             displayName: oUser.displayName,
             disabled: oUser.disabled,
+
+            roles: {
+                admin: {
+                    hasRole: true
+                },
+                viewer: {
+                    hasRole: false
+                }
+            }
         });
     });
 
