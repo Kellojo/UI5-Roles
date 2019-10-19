@@ -1,21 +1,54 @@
 sap.ui.define([
     "sap/ui/core/Control",
-    "sap/m/Label"
-], function (Control, Label) {
+    "sap/m/Label",
+    "sap/m/CheckBox",
+    "sap/m/Text"
+], function (Control, Label, CheckBox, Text) {
         return Control.extend("kellojo.m.RolesDisplay", {
             metadata: {
                 properties: {
                     roles: {
-                        type: "array"
+                        type: "object"
+                    },
+                    editable: {
+                        type: "boolean",
+                        defaultValue: false
+                    },
+
+                    userRolesText: {
+                        type: "string"
                     }
                 },
             },
 
             init: function() {
-                
+                this.m_oUserRolesText = new Label();
+            },
+
+            setRoles: function(oRoles) {
+                var aRoles = Object.keys(oRoles);
+                this.m_aCheckBoxes = {};
+
+                aRoles.forEach(sRole => {
+                    this.m_aCheckBoxes[sRole] = new CheckBox({
+                        text: sRole,
+                        selected: oRoles[sRole].hasRole
+                    }).attachSelect((oEvent) => {
+                        oEvent.getSource().rerender();
+
+                        //update properties on the custom control
+                        var oRoles = this.getRoles();
+                        oRoles[sRole].hasRole = oEvent.getSource().getSelected();
+                        this.setProperty("roles", oRoles);
+                    });
+                });
+
+                this.setProperty("roles", oRoles);
             },
 
             renderer: function (oRm, oControl) {
+                var bIsEditable = oControl.getEditable(),
+                    oRoles = oControl.getRoles();
                 
                 oRm.write("<div");
                 oRm.writeControlData(oControl);
@@ -23,17 +56,30 @@ sap.ui.define([
                 oRm.writeClasses(oControl);
                 oRm.write(">");
 
-                var aRoles = oControl.getRoles();
-                if (typeof aRoles === "array" && aRoles.length > 0) {
-                    aRoles.forEach(oRole => {
+                if (bIsEditable) {
+                    oRm.renderControl(new Text({ text: oControl.getUserRolesText()}));
+                }
+
+
+                if (oRoles) {
+                    var aRoles = Object.keys(oRoles);
+                    if (aRoles.length > 0) {
+                        aRoles.forEach(sRole => {
+                            var oRole = oRoles[sRole];
+
+                            if (bIsEditable) {
+                                oRm.renderControl(oControl.m_aCheckBoxes[sRole]);
+                            } else if (oRole.hasRole) {
+                                oRm.renderControl(new Label({
+                                    text: sRole
+                                }));
+                            }
+                        });
+                    } else {
                         oRm.renderControl(new Label({
-                            text: oRole.displayName
+                            text: "None"
                         }));
-                    });
-                } else {
-                    oRm.renderControl(new Label({
-                        text: "None"
-                    }));
+                    }
                 }
 
                 oRm.write("</div>");

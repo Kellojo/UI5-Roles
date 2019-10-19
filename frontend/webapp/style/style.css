@@ -1,3 +1,8 @@
+.kellojoM-divider {
+  width: 100%;
+  height: 1rem;
+  background-color: #fafafa;
+}
 .kellojoM-page {
   width: 100%;
   height: 100%;
@@ -9,6 +14,7 @@
   flex-grow: 0;
   position: sticky;
   top: 0px;
+  z-index: 10;
   padding: 1rem 2rem;
   background-color: #fafafa;
   display: flex;
@@ -29,6 +35,14 @@
   flex-grow: 1;
   padding: 1rem 2rem;
 }
+.kellojoM-rolesDisplay {
+  display: flex;
+  flex-direction: column;
+}
+.kellojoM-sectionHeader {
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #e5e5e5;
+}
 .kellojoM-tableActions {
   display: flex;
   flex-direction: row;
@@ -45,6 +59,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.kellojoM-DialogPageContent {
+  padding: 1rem;
 }
 .sapMList {
   border: 1px solid #e5e5e5;
