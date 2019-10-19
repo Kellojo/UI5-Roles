@@ -9,8 +9,9 @@ sap.ui.define([
 
     "com/app/manager/Config",
     "com/app/manager/RestClient",
+    "com/app/manager/Formatter",
     "com/app/manager/UserManager"
-], function (jQuery, UIComponent, MessageStrip, Device, JSONModel, ResourceModel, Config, RestClient) {
+], function (jQuery, UIComponent, MessageStrip, Device, JSONModel, ResourceModel, Config, RestClient, Formatter) {
     "use strict";
 
     var Component = UIComponent.extend("com.app.Component", {
@@ -72,9 +73,10 @@ sap.ui.define([
 
         //set device & i18n model
         this.setModel(new JSONModel(Device), "device");
-        this.setModel(new ResourceModel({
+        this.m_oI18nModel = new ResourceModel({
             bundleName: "com.app.i18n.i18n"
-         }), "i18n");
+         })
+        this.setModel(this.m_oI18nModel, "i18n");
 
         //init app header model
         this.setModel(new JSONModel({
@@ -155,7 +157,7 @@ sap.ui.define([
 
     ComponentProto.openUserManagementDialog = function (oSettings) {
         oSettings = jQuery.extend(oSettings, {
-            
+            title: "userManagementDialog-title"
         });
         this.openDialog("userManagementDialog", oSettings);
     };
@@ -181,11 +183,13 @@ sap.ui.define([
         oController
 
         var oDialog = new sap.m.Dialog({
-            title: oSettings.title
+            title: this.getResourceBundle().getText(oSettings.title)
         }).addStyleClass("glossary-dialog");
+        oDialog.setModel(this.m_oI18nModel, "i18n");
 
         var oCloseButton = new sap.m.Button({
             text: "Close",
+            type: "Transparent",
             press: function () {
                 if (oController.onCloseInDialog) {
                     oController.onCloseInDialog();
@@ -193,7 +197,7 @@ sap.ui.define([
                 oDialog.close();
             }
         });
-        oDialog.setBeginButton(oCloseButton);
+        oDialog.setEndButton(oCloseButton);
 
         //Submit Button
         if (oSettings.submitButton) {
@@ -201,7 +205,10 @@ sap.ui.define([
                 text: oSettings.submitText || "Submit",
                 type: "Emphasized",
                 press: function () {
-                    oSettings.fnOnSubmit(oDialog);
+
+                    if (oSettings.fnOnSubmit) {
+                        oSettings.fnOnSubmit(oDialog);
+                    }
                     var bSubmitValid = true;
 
                     if (oController.onSubmitButtonPress) {
@@ -216,7 +223,7 @@ sap.ui.define([
                     }
                 }
             });
-            oDialog.setEndButton(oSubmitButton);
+            oDialog.setBeginButton(oSubmitButton);
         }
 
         oDialog.addContent(this.m_oDialogs[sDialog].view);
@@ -276,6 +283,15 @@ sap.ui.define([
      */
     ComponentProto.getControl = function (sName) {
         return this["m_c" + sName];
+    };
+
+    /**
+     * Get's the resource model
+     * @returns {sap.ui.model.resource.ResourceBundle}
+     * @public
+     */
+    ComponentProto.getResourceBundle = function() {
+        return this.m_oI18nModel.getResourceBundle();
     };
 
     //
