@@ -18,12 +18,28 @@
         z-index: 10;
 
         padding: @defaultPadding 2 * @defaultPadding;
+        background-color: @backgroundGrey;
 
         display: flex;
         flex-direction: row;
 
         >div {
             flex-grow: 1;
+            max-width: 33%;
+        }
+
+        .kellojoM-page-header-mainAction, .kellojoM-page-header-Actions {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .kellojoM-page-header-mainAction {
+            justify-content: center;
+
+            .sapMSF {
+                max-width: 20rem;
+            }
         }
 
         .kellojoM-page-header-title {

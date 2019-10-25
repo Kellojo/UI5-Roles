@@ -103,5 +103,19 @@ sap.ui.define([
         this.getOwnerComponent().getRestClient().getRequest(oRequest);
     };
 
+    /**
+     * Updates the roles of a user
+     * @param {object} oRequest
+     * @public
+     */
+    ManagerProto.updateUserRoles = function(oRequest) {
+        oRequest.url = "users/{userId}/roles";
+        oRequest.data = oRequest.user;
+        oRequest.pathParameters = {
+            userId: oRequest.user.uid
+        };
+        this.getOwnerComponent().getRestClient().postRequest(oRequest);
+    };
+
     return Manager;
 });

@@ -40,7 +40,27 @@ sap.ui.define([
         console.log('Performing GET request to "' + oRequest.url + '"');
 
         jQuery.ajax({
-            url: this._determineRequestUrl(oRequest.url),
+            url: this._determineRequestUrl(oRequest),
+            success: oRequest.success,
+            error: this._generateErrorHandler(oRequest.error),
+            complete: oRequest.complete,
+        });
+    };
+
+    /**
+     * Performs a post request
+     * @public
+     */
+    ManagerProto.postRequest = function(oRequest) {
+        console.log('Performing POST request to "' + oRequest.url + '"');
+
+        jQuery.ajax({
+            method: "POST",
+            data: JSON.stringify(oRequest.data),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            url: this._determineRequestUrl(oRequest),
+
             success: oRequest.success,
             error: this._generateErrorHandler(oRequest.error),
             complete: oRequest.complete,
@@ -50,8 +70,15 @@ sap.ui.define([
     /**
      * Determines the request url based on the request key given
      */
-    ManagerProto._determineRequestUrl = function(sPath) {
-        return Config.BACKEND_BASE_URL + sPath;
+    ManagerProto._determineRequestUrl = function(oRequest) {
+        var sUrl = oRequest.url,
+            aPathParameters = Object.keys(oRequest.pathParameters || {});
+
+        aPathParameters.forEach((sKey) => {
+            sUrl = sUrl.replace("{" + sKey + "}", oRequest.pathParameters[sKey]);
+        });
+
+        return Config.BACKEND_BASE_URL + sUrl;
     };
 
     return Manager;

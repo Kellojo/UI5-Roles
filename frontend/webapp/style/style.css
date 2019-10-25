@@ -1,7 +1,7 @@
 .kellojoM-divider {
   width: 100%;
   height: 1rem;
-  background-color: #fafafa;
+  background-color: #f7f7f7;
 }
 .kellojoM-page {
   width: 100%;
@@ -9,6 +9,7 @@
   display: flex;
   flex-direction: column;
   overflow: auto;
+  background-color: #f7f7f7;
 }
 .kellojoM-page .kellojoM-page-header {
   flex-grow: 0;
@@ -16,12 +17,25 @@
   top: 0px;
   z-index: 10;
   padding: 1rem 2rem;
-  background-color: #fafafa;
+  background-color: #f7f7f7;
   display: flex;
   flex-direction: row;
 }
 .kellojoM-page .kellojoM-page-header > div {
   flex-grow: 1;
+  max-width: 33%;
+}
+.kellojoM-page .kellojoM-page-header .kellojoM-page-header-mainAction,
+.kellojoM-page .kellojoM-page-header .kellojoM-page-header-Actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.kellojoM-page .kellojoM-page-header .kellojoM-page-header-mainAction {
+  justify-content: center;
+}
+.kellojoM-page .kellojoM-page-header .kellojoM-page-header-mainAction .sapMSF {
+  max-width: 20rem;
 }
 .kellojoM-page .kellojoM-page-header .kellojoM-page-header-title {
   display: flex;
@@ -72,7 +86,15 @@
 .sapMList .sapMListShowSeparatorsAll .sapMLIBShowSeparator:last-child > td {
   border-bottom: none;
 }
+.sapMList .sapMListTblHeader .sapMListTblHeaderCell {
+  position: sticky;
+  top: calc(64px + 1rem);
+  z-index: 10;
+}
 .sapMList .sapMListItems .sapMListTblCell {
   padding-top: 0.75rem !important;
   padding-bottom: 0.75rem !important;
+}
+.sapMList .sapMListItems .sapMListTblRow:not(.sapMLIBActive) .kellojoM-lightLabel {
+  color: #6a6d70;
 }

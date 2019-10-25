@@ -26,8 +26,11 @@ sap.ui.define([
             },
 
             setRoles: function(oRoles) {
-                var aRoles = Object.keys(oRoles);
                 this.m_aCheckBoxes = {};
+                var aRoles = [];
+                if (oRoles) {
+                    aRoles = Object.keys(oRoles);
+                }
 
                 aRoles.forEach(sRole => {
                     this.m_aCheckBoxes[sRole] = new CheckBox({
@@ -44,6 +47,7 @@ sap.ui.define([
                 });
 
                 this.setProperty("roles", oRoles);
+                this.rerender();
             },
 
             renderer: function (oRm, oControl) {
@@ -75,10 +79,6 @@ sap.ui.define([
                                 }));
                             }
                         });
-                    } else {
-                        oRm.renderControl(new Label({
-                            text: "None"
-                        }));
                     }
                 }
 

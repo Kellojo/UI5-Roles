@@ -1,0 +1,28 @@
+<mvc:View
+    controllerName="com.app.controller.dialog.userManagementDialog"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:k="kellojo.m"
+    xmlns:core="sap.ui.core">
+
+    <k:Wrapper>
+
+        <VBox class="kellojoM-DialogPageContent">
+            <Link text="{/user/email}" href="mailto:{/user/email}"/>
+            <Label text="{ parts: [
+                    '/user/lastModifiedAt'
+                ],
+                formatter: '.formatLastModified'}"/>
+        </VBox>
+
+        <k:Divider/>
+
+        <k:SectionHeader text="{i18n>userManagementDialog-userRolesText}"/>
+        <k:Wrapper class="kellojoM-DialogPageContent">
+            <k:RolesDisplay editable="true" roles="{/user/roles}"/>
+        </k:Wrapper>
+
+    </k:Wrapper>
+
+</mvc:View>

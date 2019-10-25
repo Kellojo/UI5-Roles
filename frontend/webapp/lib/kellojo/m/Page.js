@@ -20,6 +20,11 @@ sap.ui.define([
                     content: {
                         type: "sap.ui.core.Control",
                         multiple: true
+                    },
+
+                    mainAction: {
+                        type: "sap.ui.core.Control",
+                        multiple: true
                     }
                 },
 
@@ -60,7 +65,10 @@ sap.ui.define([
                         oRm.write("</div>");
 
                         oRm.write("<div class='kellojoM-page-header-mainAction'>");
-                        
+                        var aContent = oControl.getMainAction();
+                        aContent.forEach(oItem => {
+                            oRm.renderControl(oItem);
+                        });
                         oRm.write("</div>");
 
                         oRm.write("<div class='kellojoM-page-header-Actions'>");

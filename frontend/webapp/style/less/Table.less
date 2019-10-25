@@ -13,10 +13,26 @@
         }
     }
 
+    .sapMListTblHeader {
+        .sapMListTblHeaderCell {
+            position: sticky;
+            top: calc(64px + @defaultPadding);
+            z-index: 10;
+        }
+    }
+
     .sapMListItems {
         .sapMListTblCell {
             padding-top: @smallerPadding !important;
             padding-bottom: @smallerPadding !important;
+        }
+
+        .sapMListTblRow {
+            &:not(.sapMLIBActive) {
+                .kellojoM-lightLabel {
+                    color: @labelGrey;
+                }
+            }
         }
     }
 }

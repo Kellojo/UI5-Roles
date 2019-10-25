@@ -10,6 +10,10 @@
     id="idAppView">
 
     <k:Page title="User Management" subTitle="Manage all Users">
+
+        <k:mainAction>
+            <SearchField placeholder="{i18n>userManagement-SearchPlaceholder}" liveChange="onSearch"/>
+        </k:mainAction>
         
         <k:TableActions>
             <k:left>
@@ -27,7 +31,15 @@
 
         </k:TableActions>
 
-        <Table busy="{/isLoadingUsers}" itemPress="onUserItemPress" items="{
+        <Table 
+            id="idUserTable"
+            busy="{/isLoadingUsers}" 
+            busyIndicatorDelay="100" 
+            itemPress="onUserItemPress"
+            growing="true" 
+            growingScrollToLoad="true" 
+            growingThreshold="50" 
+            items="{
                 path: '/users',
                 sorter: {
                     path: 'firstName'
@@ -35,26 +47,29 @@
             }">
             <columns>
                 <Column>
-                    <Text text="User"/>
+                    <Text text="{i18n>userManagement-TableColumn-User}"/>
                 </Column>
                 <Column minScreenWidth="Tablet">
-                    <Text text="Roles"/>
+                    <Text text="{i18n>userManagement-TableColumn-Roles}"/>
                 </Column>
                 
-                <Column minScreenWidth="Desktop">
-                    <Text text="Last modified"/>
+                <Column minScreenWidth="Medium">
+                    <Text text="{i18n>userManagement-TableColumn-CreatedAt}"/>
                 </Column>
-                <Column minScreenWidth="Desktop">
-                    <Text text="Created"/>
+                <Column minScreenWidth="Large">
+                    <Text text="{i18n>userManagement-TableColumn-LastModified}"/>
                 </Column>
             </columns>
 
             <items>
                 <ColumnListItem type="Active">
-                    <Link text="{email}"/>
-                    <k:RolesDisplay roles="{}"/>
-                    <Label text="{creationTime}"/>
-                    <Label text="{creationTime}"/>
+                    <Link text="{email}" href="mailto:{email}"/>
+                    <k:RolesDisplay roles="{roles}"/>
+                    <VBox>
+                        <Label text="{ parts: [ 'creationTime' ], formatter: '.formatter.formatDate'}" class="kellojoM-lightLabel"/>
+                        <Label text="{ parts: [ 'creationTime' ], formatter: '.formatter.formatTime'}" class="kellojoM-lightLabel"/>
+                    </VBox>
+                    <Label text="{ parts: [ 'lastModifiedAt' ], formatter: '.formatter.fromNow'}" class="kellojoM-lightLabel"/>
 				</ColumnListItem>
                 
             </items>
