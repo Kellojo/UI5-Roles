@@ -41,8 +41,11 @@
             growingThreshold="50" 
             items="{
                 path: '/users',
+                groupHeaderFactory: '.getGroupHeader',
                 sorter: {
-                    path: 'firstName'
+                    path: '',
+                    comparator: '.sortUsers',
+                    group: '.groupUsers'
                 }
             }">
             <columns>

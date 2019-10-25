@@ -109,6 +109,38 @@ sap.ui.define([
         MessageToast.show(sText);
     };
 
+    // --------------------------
+    // Sorters & Formatters
+    // --------------------------
+
+    ControllerProto.sortUsers = function(oUser1, oUser2) {
+        var bHasAnyRoles1 = this.getOwnerComponent().getUserManager().hasAnyRoles(oUser1),
+            bHasAnyRoles2 = this.getOwnerComponent().getUserManager().hasAnyRoles(oUser2);
+
+        if (bHasAnyRoles1 && !bHasAnyRoles2) {
+            return -1;
+        } else if (bHasAnyRoles2 && !bHasAnyRoles1) {
+            return 1;
+        }
+
+        return 0;
+    };
+
+    ControllerProto.groupUsers = function(oContext) {
+        var oUser = oContext.getObject();
+        return this.getOwnerComponent().getUserManager().hasAnyRoles(oUser);
+    };
+
+    ControllerProto.getGroupHeader = function(oGroup) {
+        var oResourceBundle = this.getOwnerComponent().getResourceBundle();
+        return new sap.m.GroupHeaderListItem({
+            title: oGroup.key ? 
+                oResourceBundle.getText("userManagement-GroupHeader-WithRoles") :
+                oResourceBundle.getText("userManagement-GroupHeader-NoRoles"),
+            upperCase: false
+        });
+    };
+
 
     return Controller;
 });

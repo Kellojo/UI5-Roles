@@ -89,6 +89,23 @@ sap.ui.define([
         return !!firebase.auth().currentUser;
     };
 
+    /**
+     * Checks, if the user has any roles
+     * @param {user object} oUser
+     * @returns {boolean}  
+     */
+    ManagerProto.hasAnyRoles = function(oUser) {
+        var aRoles = Object.keys(oUser.roles),
+            bHasAnyRoles = false;
+        aRoles.forEach((sRole) => {
+            if (oUser.roles[sRole].hasRole) {
+                bHasAnyRoles = true;
+            }
+        });
+
+        return bHasAnyRoles;
+    };
+
     // -----------------------------
     // User Management Functions
     // -----------------------------
