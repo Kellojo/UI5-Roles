@@ -78,6 +78,15 @@
 .kellojoM-DialogPageContent {
   padding: 1rem;
 }
+.app-errorMessageContainer {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+}
+.app-errorMessageContainer .sapMMsgStrip {
+  margin-bottom: 0.25rem;
+}
 .sapMList {
   border: 1px solid #e5e5e5;
 }

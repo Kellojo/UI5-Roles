@@ -24,7 +24,8 @@ sap.ui.define([
      */
     ManagerProto._generateErrorHandler = function (fnCustomError) {
         return function (error) {
-            this.getOwnerComponent().showErrorMessage(error.message);
+            var sMessage = error.message || error.responseText;
+            this.getOwnerComponent().showErrorMessage(sMessage);
 
             if (fnCustomError) {
                 fnCustomError();
