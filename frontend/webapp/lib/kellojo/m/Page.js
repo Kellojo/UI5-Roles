@@ -68,7 +68,6 @@ sap.ui.define([
                     if (oPageHeader) {
                         var iHeaderHeight = oPageHeader.innerHeight();
                         oDomRef.style.setProperty('--kellojoM-page-header-height', iHeaderHeight + "px");
-                        console.log(iHeaderHeight);
                         return iHeaderHeight;
                     }
                 }
