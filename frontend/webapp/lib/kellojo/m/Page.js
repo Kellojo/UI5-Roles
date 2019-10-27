@@ -41,12 +41,45 @@ sap.ui.define([
                 }).addStyleClass("kellojoM-page-header-subtitletitle-text");
             },
 
+            onAfterRendering: function() {
+                this.getHeaderHeight();
+            },
+
+            // ---------------------------
+            // Getters & Setters
+            // ---------------------------
+
             setTitle: function(sTitle, bSuppressInvalidate) {
                 this.m_oTitle.setText(sTitle);
             },
             setSubTitle: function(sSubTitle, bSuppressInvalidate) {
                 this.m_oSubTitle.setText(sSubTitle);
             },
+
+            /**
+             * Gets the outer height of the page header & also updates the css variable for it
+             * @returns {number}
+             * @public 
+             */
+            getHeaderHeight: function() {
+                var oDomRef = this.getDomRef();
+                if (oDomRef) {
+                    var oPageHeader = jQuery(oDomRef).find(".kellojoM-page-header");
+                    if (oPageHeader) {
+                        var iHeaderHeight = oPageHeader.innerHeight();
+                        oDomRef.style.setProperty('--kellojoM-page-header-height', iHeaderHeight + "px");
+                        console.log(iHeaderHeight);
+                        return iHeaderHeight;
+                    }
+                }
+
+                return 0;
+            },
+
+
+            // ---------------------------
+            // Renderer
+            // ---------------------------
 
             renderer: function (oRm, oControl) {
                 

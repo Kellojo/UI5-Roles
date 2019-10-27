@@ -9,6 +9,7 @@
     overflow: auto;
 
     background-color: @backgroundGrey;
+    --kellojoM-page-header-height: 0px; //dynamically calculated & updated after rendering
     
 
     .kellojoM-page-header {
@@ -60,4 +61,32 @@
         padding: @defaultPadding 2 * @defaultPadding;
     }
     
+}
+
+.sap-phone {
+    .kellojoM-page {
+
+        .kellojoM-page-header {
+            flex-direction: column;
+            padding: @defaultPadding;
+
+            >div {
+                max-width: 100%;
+            }
+
+            .kellojoM-page-header-mainAction {
+                .sapMSF {
+                    max-width: 100%;
+                }
+            }
+
+            .kellojoM-page-header-Actions {
+                display: none;
+            }
+        }
+
+        .kellojoM-page-content {
+            padding: 0px;
+        }
+    }
 }
