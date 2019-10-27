@@ -162,6 +162,19 @@ sap.ui.define([
         this.openDialog("userManagementDialog", oSettings);
     };
 
+    /**
+     * Navigates back, simple as that ;)
+     */
+    ComponentProto.navBack = function() {
+            var oHistory = History.getInstance();
+			    sPreviousHash = oHistory.getPreviousHash();
+			if (sPreviousHash !== undefined) {
+				window.history.go(-1);
+			} else {
+				console.error("Could not navigate back and not default fallback has been configured...");
+			}
+    };
+
 
     // -------------------------------------
     // Utility
