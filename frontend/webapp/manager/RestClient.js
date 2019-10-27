@@ -18,34 +18,31 @@ sap.ui.define([
     };
 
 
-    /**
-     * Creates an error handler for a custom error function
-     * @protected
-     */
-    ManagerProto._generateErrorHandler = function (fnCustomError) {
-        return function (error) {
-            var sMessage = error.message || error.responseText;
-            this.getOwnerComponent().showErrorMessage(sMessage);
+    // ----------------------
+    // Requests
+    // ----------------------
 
-            if (fnCustomError) {
-                fnCustomError();
-            }
-        }.bind(this);
-    };
 
     /**
      * Performs a get request
      * @public
      */
     ManagerProto.getRequest = function(oRequest) {
-        console.log('Performing GET request to "' + oRequest.url + '"');
+        var fnSendRequest = (sIdToken) => {
+            console.log('Performing GET request to "' + oRequest.url + '"');
 
-        jQuery.ajax({
-            url: this._determineRequestUrl(oRequest),
-            success: oRequest.success,
-            error: this._generateErrorHandler(oRequest.error),
-            complete: oRequest.complete,
-        });
+            jQuery.ajax({
+                url: this._determineRequestUrl(oRequest),
+                headers: {
+                    Authorization: "Bearer " + sIdToken
+                },
+                success: oRequest.success,
+                error: this._generateErrorHandler(oRequest.error),
+                complete: oRequest.complete,
+            });
+        };
+
+        this._applyFirebaseIdTokenToRequest(fnSendRequest);
     };
 
     /**
@@ -53,20 +50,47 @@ sap.ui.define([
      * @public
      */
     ManagerProto.postRequest = function(oRequest) {
-        console.log('Performing POST request to "' + oRequest.url + '"');
+        var fnSendRequest = (sIdToken) => {
+            console.log('Performing POST request to "' + oRequest.url + '"');
 
-        jQuery.ajax({
-            method: "POST",
-            data: JSON.stringify(oRequest.data),
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            url: this._determineRequestUrl(oRequest),
+            jQuery.ajax({
+                method: "POST",
+                data: JSON.stringify(oRequest.data),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                url: this._determineRequestUrl(oRequest),
+                headers: {
+                    Authorization: "Bearer " + sIdToken
+                },
 
-            success: oRequest.success,
-            error: this._generateErrorHandler(oRequest.error),
-            complete: oRequest.complete,
-        });
+                success: oRequest.success,
+                error: this._generateErrorHandler(oRequest.error),
+                complete: oRequest.complete,
+            });
+        }
+
+        this._applyFirebaseIdTokenToRequest(fnSendRequest);
     };
+
+    /**
+     * Calls the fnSendRequest function, with the firebase id token of the user, after getting the token
+     * @param {function} fnSendRequest - the function that sends off the request
+     * @protected
+     */
+    ManagerProto._applyFirebaseIdTokenToRequest = function(fnSendRequest) {
+        //send off request after getting firebase id token
+        if (this.getOwnerComponent().getUserManager().isLoggedIn()) {
+            firebase.auth().currentUser.getIdToken()
+                .then(fnSendRequest)
+                .catch(fnSendRequest);
+        } else {
+            fnSendRequest();
+        }
+    };
+
+    // ----------------------
+    // Utility
+    // ----------------------
 
     /**
      * Determines the request url based on the request key given
@@ -80,6 +104,21 @@ sap.ui.define([
         });
 
         return Config.BACKEND_BASE_URL + sUrl;
+    };
+    
+    /**
+     * Creates an error handler for a custom error function
+     * @protected
+     */
+    ManagerProto._generateErrorHandler = function (fnCustomError) {
+        return function (error) {
+            var sMessage = error.message || error.responseText;
+            this.getOwnerComponent().showErrorMessage(sMessage);
+
+            if (fnCustomError) {
+                fnCustomError();
+            }
+        }.bind(this);
     };
 
     return Manager;
