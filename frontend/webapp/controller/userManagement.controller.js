@@ -4,8 +4,9 @@ sap.ui.define([
     "com/app/manager/Formatter",
     "sap/m/MessageToast",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], function (Controller, JSONModel, Formatter, MessageToast, Filter, FilterOperator) {
+    "sap/ui/model/FilterOperator",
+    "sap/m/GroupHeaderListItem"
+], function (Controller, JSONModel, Formatter, MessageToast, Filter, FilterOperator, GroupHeaderListItem) {
     "use strict";
 
     var Controller = Controller.extend("com.app.controller.userManagement", {
@@ -114,16 +115,7 @@ sap.ui.define([
     // --------------------------
 
     ControllerProto.sortUsers = function(oUser1, oUser2) {
-        var bHasAnyRoles1 = this.getOwnerComponent().getUserManager().hasAnyRoles(oUser1),
-            bHasAnyRoles2 = this.getOwnerComponent().getUserManager().hasAnyRoles(oUser2);
-
-        if (bHasAnyRoles1 && !bHasAnyRoles2) {
-            return -1;
-        } else if (bHasAnyRoles2 && !bHasAnyRoles1) {
-            return 1;
-        }
-
-        return 0;
+        return this.getOwnerComponent().getUserManager().sortUsers(oUser1, oUser2);
     };
 
     ControllerProto.groupUsers = function(oContext) {
@@ -133,7 +125,7 @@ sap.ui.define([
 
     ControllerProto.getGroupHeader = function(oGroup) {
         var oResourceBundle = this.getOwnerComponent().getResourceBundle();
-        return new sap.m.GroupHeaderListItem({
+        return new GroupHeaderListItem({
             title: oGroup.key ? 
                 oResourceBundle.getText("userManagement-GroupHeader-WithRoles") :
                 oResourceBundle.getText("userManagement-GroupHeader-NoRoles"),

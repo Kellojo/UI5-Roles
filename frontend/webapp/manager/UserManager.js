@@ -90,7 +90,7 @@ sap.ui.define([
     };
 
     /**
-     * Checks, if the user has any roles
+     * Checks, if the given user has any roles
      * @param {user object} oUser
      * @returns {boolean}  
      */
@@ -132,6 +132,36 @@ sap.ui.define([
             userId: oRequest.user.uid
         };
         this.getOwnerComponent().getRestClient().postRequest(oRequest);
+    };
+
+    /**
+     * Sorter function for users
+     * @param {object} oUser1
+     * @param {object} oUser2 
+     * @returns {number} 
+     */
+    ManagerProto.sortUsers = function(oUser1, oUser2) {
+        var bHasAnyRoles1 = this.getOwnerComponent().getUserManager().hasAnyRoles(oUser1),
+            bHasAnyRoles2 = this.getOwnerComponent().getUserManager().hasAnyRoles(oUser2);
+
+        if (bHasAnyRoles1 && !bHasAnyRoles2) {
+            return -1;
+        } else if (bHasAnyRoles2 && !bHasAnyRoles1) {
+            return 1;
+        } else if (!bHasAnyRoles1 && !bHasAnyRoles2) {
+            if (oUser1.lastModifiedAt && !oUser2.lastModifiedAt) {
+                return -1;
+            } else if (!oUser1.lastModifiedAt && oUser2.lastModifiedAt) {
+                return 1;
+            } else if (oUser1.lastModifiedAt && oUser2.lastModifiedAt) {
+                return oUser2.lastModifiedAt._seconds - oUser1.lastModifiedAt._seconds;
+            }
+            return 0;
+        } else if (bHasAnyRoles2 && bHasAnyRoles1) {
+            return oUser2.lastModifiedAt._seconds - oUser1.lastModifiedAt._seconds;
+        }
+
+        return 0;
     };
 
     return Manager;
