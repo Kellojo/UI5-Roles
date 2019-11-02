@@ -13,6 +13,10 @@ sap.ui.define([
                         type: "sap.ui.core.Control",
                         multiple: true
                     },
+                    main: {
+                        type: "sap.ui.core.Control",
+                        multiple: true
+                    },
                     right: {
                         type: "sap.ui.core.Control",
                         multiple: true
@@ -35,6 +39,13 @@ sap.ui.define([
                     oRm.write("<div class='kellojoM-tableActions-left'>");
                         var aLeft = oControl.getLeft();
                         aLeft.forEach(oControl => {
+                            oRm.renderControl(oControl);
+                        });
+                    oRm.write("</div>");
+
+                    oRm.write("<div class='kellojoM-tableActions-main'>");
+                        var aMain = oControl.getMain();
+                        aMain.forEach(oControl => {
                             oRm.renderControl(oControl);
                         });
                     oRm.write("</div>");
