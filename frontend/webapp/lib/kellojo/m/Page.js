@@ -1,8 +1,10 @@
 sap.ui.define([
     "sap/ui/core/Control",
+    "sap/ui/core/delegate/ScrollEnablement",
     "sap/m/Text",
-    "sap/m/Label"
-], function (Control, Text, Label) {
+    "sap/m/Label",
+    "sap/m/ListGrowingDirection"
+], function (Control, ScrollEnablement, Text, Label, ListGrowingDirection) {
         return Control.extend("kellojo.m.Page", {
             metadata: {
                 properties: {
@@ -28,6 +30,10 @@ sap.ui.define([
                     }
                 },
 
+                events: {
+                    scrollToLoad: {}
+                },
+
                 defaultAggregation: "content"
             },
 
@@ -39,6 +45,24 @@ sap.ui.define([
                 this.m_oSubTitle = new Label({
                     text: this.getSubTitle()
                 }).addStyleClass("kellojoM-page-header-subtitletitle-text");
+            },
+
+            onBeforeRendering: function () {
+                if (this._oScroller) {
+                    this._oScroller.destroy();
+                    this._oScroller = null;
+                } else {
+                    this._oScroller = new ScrollEnablement(this, null, {
+                        scrollContainerId: this.getId(),
+                        horizontal: false,
+                        vertical: true
+                    });
+                    this._oScroller.setGrowingList(this.fireScrollToLoad.bind(this), ListGrowingDirection.Downwards);
+                }
+    
+                if (this._headerTitle) {
+                    this._headerTitle.setLevel(this.getTitleLevel());
+                }
             },
 
             onAfterRendering: function() {

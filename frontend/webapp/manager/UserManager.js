@@ -117,6 +117,9 @@ sap.ui.define([
      */
     ManagerProto.readAllUsers = function(oRequest) {
         oRequest.url = "users";
+        oRequest.parameters = {
+            nextPageToken: oRequest.nextPageToken
+        }
         this.getOwnerComponent().getRestClient().getRequest(oRequest);
     };
 

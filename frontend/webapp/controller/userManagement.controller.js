@@ -5,7 +5,7 @@ sap.ui.define([
     "sap/m/MessageToast",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/m/GroupHeaderListItem"
+    "sap/m/GroupHeaderListItem",
 ], function (Controller, JSONModel, Formatter, MessageToast, Filter, FilterOperator, GroupHeaderListItem) {
     "use strict";
 
@@ -36,20 +36,40 @@ sap.ui.define([
 
     /**
      * Loads all users
+     * @param {boolean} bIsScrollToLoadTriggered
      * @public
      */
-    ControllerProto.loadUsers = function() {
+    ControllerProto.loadUsers = function(oEvent, bIsScrollToLoadTriggered) {
+        if (this.m_oUsersModel.getProperty("/isLoadingUsers") || (bIsScrollToLoadTriggered && !this.m_sNextPageToken)) {
+            return;
+        }
+        bIsScrollToLoadTriggered = bIsScrollToLoadTriggered && this.m_sNextPageToken;
+
         this.m_oUsersModel.setProperty("/isLoadingUsers", true);
-        this.getOwnerComponent().getUserManager().readAllUsers({
+        var oRequest = {
             success: (oData) => {
-                this.m_oUsersModel.setProperty("/users", oData.results);
-                this.m_oUsersModel.setProperty("/userCount", oData.results.length);
+                if (bIsScrollToLoadTriggered) {
+                    var aUsers = this.m_oUsersModel.getProperty("/users");
+                    aUsers.push.apply(aUsers, oData.results);
+                    this.m_oUsersModel.setProperty("/users", aUsers);
+                    this.m_oUsersModel.setProperty("/userCount", aUsers.length);
+                } else {
+                    this.m_oUsersModel.setProperty("/users", oData.results);
+                    this.m_oUsersModel.setProperty("/userCount", oData.results.length);
+                }
+
+                this.m_sNextPageToken = oData.nextPageToken;
                 this.m_oUsersModel.setProperty("/allRoles", oData.allRoles);
             },
             complete: () => {
                 this.m_oUsersModel.setProperty("/isLoadingUsers", false);
             },
-        });
+        }
+
+        if (bIsScrollToLoadTriggered) {
+            oRequest.nextPageToken = this.m_sNextPageToken;
+        }
+        this.getOwnerComponent().getUserManager().readAllUsers(oRequest);
     };
 
     // --------------------------
@@ -108,6 +128,14 @@ sap.ui.define([
         }
 
         MessageToast.show(sText);
+    };
+
+    /**
+     * Handles the scroll to load event
+     * @public 
+     */
+    ControllerProto.onScrollToLoadTriggered = function() {
+        this.loadUsers(null, true);
     };
 
     // --------------------------

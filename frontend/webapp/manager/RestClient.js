@@ -33,6 +33,7 @@ sap.ui.define([
 
             jQuery.ajax({
                 url: this._determineRequestUrl(oRequest),
+                data: oRequest.parameters,
                 headers: {
                     Authorization: "Bearer " + sIdToken
                 },
