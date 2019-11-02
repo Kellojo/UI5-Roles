@@ -35,18 +35,125 @@
             }' >
         </script>
         <script type="text/javascript">
-            sap.ui.getCore().attachInit(function () {
-                new sap.ui.core.ComponentContainer({
-                    name: "com.app",
-                    manifest: true,
-                    height: "100%",
-                    id: "mainComponent"
-                }).placeAt("content");
+
+            //init firebase
+            firebase.initializeApp({
+                apiKey: "AIzaSyA0HD4i38wataaEQZqwG7EiTIj2thUuavk",
+                authDomain: "ui5-roles.firebaseapp.com",
+                databaseURL: "https://ui5-roles.firebaseio.com",
+                projectId: "ui5-roles",
+                storageBucket: "ui5-roles.appspot.com",
+                messagingSenderId: "497695678668",
+                appId: "1:497695678668:web:59c15bd65518674ee5a269"
+            });
+
+            //attach auth state changed handler
+            firebase.auth().onAuthStateChanged(function() {
+                sap.ui.getCore().attachInit(function () {
+                    new sap.ui.core.ComponentContainer({
+                        name: "com.app",
+                        manifest: true,
+                        height: "100%",
+                        id: "mainComponent"
+                    }).placeAt("content");
+                });
             });
         </script>
+
+        <style>
+            #idLoadingScreen {
+
+                position: fixed;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                z-index: 10;
+
+                display: flex !important;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                visibility: visible !important;
+                background-color: #f7f7f7;
+
+            }
+
+            #idLoadingScreen * {
+                visibility: visible !important;
+            }
+
+            #idLoadingScreen-AppTitle {
+                font-family: Arial,Helvetica,sans-serif !important;
+                font-size: 1.5rem;
+                margin-bottom: 0.25rem;
+                color: #32363a;
+            }
+
+            #idLoadingScreen-StatusIndicatorContainer {
+                display: flex;
+                flex-direction: row;
+            }
+
+            #idLoadingScreen-StatusIndicator {
+                font-family: Arial,Helvetica,sans-serif !important;
+                font-size: 1rem;
+                color: #32363a;
+            }
+
+            .spinner {
+                text-align: left;
+                display: inline-flex;
+            }
+
+            .spinner > div {
+                border-radius: 100%;
+                display: inline-block;
+                -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+                animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+            }
+
+             .spinner .bounce1 {
+                -webkit-animation-delay: -0.32s;
+                animation-delay: -0.32s;
+            }
+
+            .spinner .bounce2 {
+                -webkit-animation-delay: -0.16s;
+                animation-delay: -0.16s;
+            }
+
+            @-webkit-keyframes sk-bouncedelay {
+                0%, 80%, 100% { -webkit-transform: translateY(-8px) }
+                40% { -webkit-transform: translateY(-8px) }
+            }
+
+            @keyframes sk-bouncedelay {
+                0%, 80%, 100% { 
+                    -webkit-transform: translateY(0px);
+                    transform: translateY(0px);
+                } 40% { 
+                    -webkit-transform: translateY(-8px);
+                    transform: translateY(-8px);
+                }
+            }
+        </style>
 
         <link rel="stylesheet" type="text/css" href="style/style.css">
     </head>
     
-    <body class="sapUiBody sapUiSizeCompact" id="content"></body>
+    <body class="sapUiBody sapUiSizeCompact" id="content">
+        <div id="idLoadingScreen">
+            <div id="idLoadingScreen-AppTitle">User Management App</div>
+            <div id="idLoadingScreen-StatusIndicatorContainer">
+                <div id="idLoadingScreen-StatusIndicator">Loading</div>
+                <div class="spinner">
+                    <div class="bounce1">.</div>
+                    <div class="bounce2">.</div>
+                    <div class="bounce3">.</div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

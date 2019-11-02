@@ -35,23 +35,14 @@ sap.ui.define([
         UIComponent.prototype.init.apply(this, arguments);
         this.getRouter().initialize();
 
-        //init firebase
-        firebase.initializeApp({
-            apiKey: "AIzaSyA0HD4i38wataaEQZqwG7EiTIj2thUuavk",
-            authDomain: "ui5-roles.firebaseapp.com",
-            databaseURL: "https://ui5-roles.firebaseio.com",
-            projectId: "ui5-roles",
-            storageBucket: "ui5-roles.appspot.com",
-            messagingSenderId: "497695678668",
-            appId: "1:497695678668:web:59c15bd65518674ee5a269"
-        });
-
         //init beans
         Config.Beans.forEach(function(sBean) {
             var oBean = com.app.manager[sBean];
             if (!oBean) {
                 jQuery.sap.log.error("Could not initialize missing bean '" + sBean + "'");
             } else {
+                jQuery.sap.log.info("Creating Bean '" + sBean + "'");
+
                 oBean = new oBean({});
                 oBean.setOwnerComponent(this);
                 oBean.onInit();
@@ -64,6 +55,7 @@ sap.ui.define([
         //create shared dialogs
         this.m_oDialogs = {};
         for (var key in Config.SHARED_DIALOGS) {
+            jQuery.sap.log.info("Creating Dialog '" + key + "'");
             this.m_oDialogs[key] = {
                 view: this.runAsOwner(function (sView) {
                     return sap.ui.xmlview(sView);
@@ -86,6 +78,8 @@ sap.ui.define([
 
         //attach swipe gesture events
         if (Device.system.phone || Device.system.tablet) {
+            jQuery.sap.log.info("Attaching Gesture Handlers");
+            
             this.xDown = null;
             this.yDown = null;
             document.addEventListener('touchstart', this.handleTouchStart.bind(this), false);
@@ -93,14 +87,20 @@ sap.ui.define([
 
             this.attachSwipeRight(this.navBack.bind(this));
         }
+
+        //remove splath screen
+        var oLoadingScreenElement = jQuery("#idLoadingScreen");
+        oLoadingScreenElement.fadeOut(300, () => {
+            oLoadingScreenElement.remove();
+        });
     };
 
     /**
-     * Handler for the Authenticartion Change
+     * Handler for the Authentication Change
      * @protected
      */
     ComponentProto.onAuthStateChange = function(oUser) {
-        
+        jQuery.sap.log.info("Auth State Changed (" + !!oUser + ")");
     };
 
     // -------------------------------------
