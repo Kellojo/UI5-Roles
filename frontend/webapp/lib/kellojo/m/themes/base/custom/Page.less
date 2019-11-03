@@ -17,7 +17,7 @@
         flex-shrink: 0;
         position: sticky;
         top: 0px;
-        z-index: 10;
+        z-index: 11;
 
         padding: @defaultPadding 2 * @defaultPadding;
         background-color: @backgroundGrey;
@@ -58,9 +58,14 @@
     .kellojoM-page-content {
         flex-grow: 1;
 
-        padding: @defaultPadding 2 * @defaultPadding;
+        padding: @defaultPadding 2 * @defaultPadding 2 * @defaultPadding 2 * @defaultPadding;
     }
     
+    &.kellojoM-page-flg-scrollStarted {
+        .kellojoM-page-header {
+            box-shadow: @defaultBoxShadow;
+        }
+    }
 }
 
 .sap-phone {
@@ -68,10 +73,15 @@
 
         .kellojoM-page-header {
             flex-direction: column;
-            padding: @defaultPadding;
+            padding: 0px;
+            background-color: #395E66;
 
             >div {
                 max-width: 100%;
+            }
+
+            .sapMText, .sapMLabel {
+                color: @white;
             }
 
             .kellojoM-page-header-mainAction {

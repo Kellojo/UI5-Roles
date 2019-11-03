@@ -38,6 +38,7 @@ sap.ui.define([
             },
 
             init: function() {
+                this.attachBrowserEvent("scroll", this.onScroll.bind(this));
                 this.m_oTitle = new Text({
                     text: this.getTitle()
                 }).addStyleClass("kellojoM-page-header-title-text");
@@ -67,6 +68,11 @@ sap.ui.define([
 
             onAfterRendering: function() {
                 this.getHeaderHeight();
+            },
+
+            onScroll: function() {
+                var iScrollTop = this.getDomRef().scrollTop;
+                this.toggleStyleClass("kellojoM-page-flg-scrollStarted", iScrollTop > 16);
             },
 
             // ---------------------------

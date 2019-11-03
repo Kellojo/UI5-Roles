@@ -2,6 +2,7 @@
 
 .sapMList {
     border: 1px solid @borderGrey;
+    box-shadow: @defaultBoxShadow;
 
     .sapMListShowSeparatorsAll {
         .sapMLIBShowSeparator:first-child>td {
@@ -34,5 +35,11 @@
                 }
             }
         }
+    }
+}
+
+.sap-phone {
+    .sapMList {
+        border: none;
     }
 }
