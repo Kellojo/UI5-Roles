@@ -21,6 +21,7 @@ sap.ui.define([
             users: [],
             userCount: 0,
             isLoadingUsers: false,
+            isLoadingUsersViaScrolling: false,
             allRoles: []
         });
         this.m_oUsersModel.setSizeLimit(9999999);
@@ -43,9 +44,10 @@ sap.ui.define([
         if (this.m_oUsersModel.getProperty("/isLoadingUsers") || (bIsScrollToLoadTriggered && !this.m_sNextPageToken)) {
             return;
         }
-        bIsScrollToLoadTriggered = bIsScrollToLoadTriggered && this.m_sNextPageToken;
+        bIsScrollToLoadTriggered = !!(bIsScrollToLoadTriggered && this.m_sNextPageToken);
 
-        this.m_oUsersModel.setProperty("/isLoadingUsers", true);
+        this.m_oUsersModel.setProperty("/isLoadingUsers", !bIsScrollToLoadTriggered);
+        this.m_oUsersModel.setProperty("/isLoadingUsersViaScrolling", bIsScrollToLoadTriggered);
         var oRequest = {
             success: (oData) => {
                 if (bIsScrollToLoadTriggered) {
@@ -63,6 +65,7 @@ sap.ui.define([
             },
             complete: () => {
                 this.m_oUsersModel.setProperty("/isLoadingUsers", false);
+                this.m_oUsersModel.setProperty("/isLoadingUsersViaScrolling", false);
             },
         }
 

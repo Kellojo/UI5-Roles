@@ -1,0 +1,21 @@
+
+@kellojoM-tableBusyIndicator-width: 48px;
+
+.kellojoM-tableBusyIndicator {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    padding: @defaultPadding;
+
+    .kellojoM-tableBusyIndicator-busyIndicator {
+        width: @kellojoM-tableBusyIndicator-width;
+        margin-right: @defaultPadding;
+    }
+
+    .kellojoM-tableBusyIndicator-textContainer {
+        display: flex;
+        flex-direction: column;
+    }
+}
