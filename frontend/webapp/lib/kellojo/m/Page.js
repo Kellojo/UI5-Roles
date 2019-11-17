@@ -10,11 +10,15 @@ sap.ui.define([
                 properties: {
                     title: {
                         type: "string",
-                        defaultValue: "Title"
+                        defaultValue: ""
                     },
                     subTitle: {
                         type: "string",
-                        defaultValue: "Subtitle"
+                        defaultValue: ""
+                    },
+                    showHeader: {
+                        type: "boolean",
+                        defaultValue: true
                     }
                 },
 
@@ -111,7 +115,7 @@ sap.ui.define([
             // ---------------------------
 
             renderer: function (oRm, oControl) {
-                
+
                 oRm.write("<div");
                 oRm.writeControlData(oControl);
                 oRm.addClass("kellojoM-page");
@@ -119,7 +123,7 @@ sap.ui.define([
                 oRm.write(">");
 
                 
-
+                if (oControl.getShowHeader()) {
                     oRm.write("<div class='kellojoM-page-header'>");
                         oRm.write("<div class='kellojoM-page-header-title'>");
                             oRm.renderControl(oControl.m_oTitle);
@@ -137,6 +141,7 @@ sap.ui.define([
                         
                         oRm.write("</div>");
                     oRm.write("</div>");
+                }
 
                     oRm.write("<div class='kellojoM-page-content'>");
                     var aContent = oControl.getContent();
