@@ -30,7 +30,7 @@
                 "controlId": "idApp",
                 "controlAggregation": "pages",
                 "bypassed": {
-                    "target": "notFound"
+                    "target": "userManagemenrt"
                 }
             },
 
@@ -41,15 +41,23 @@
                     "target": "userManagement"
                 },
                 {
+                    "pattern": "login",
+                    "name": "login",
+                    "target": "login"
+                },
+                {
                     "pattern": "",
-                    "name": "notFound",
-                    "target": "notFound"
+                    "name": "userManagement",
+                    "target": "userManagement"
                 }
             ],
 
             "targets": {
                 "userManagement": {
                     "viewName": "userManagement"
+                },
+                "login": {
+                    "viewName": "login"
                 },
                 "notFound": {
                     "viewName": "notFound"
