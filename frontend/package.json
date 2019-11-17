@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "FE-run-local": "http-server ./webapp"
+    "FE-run-local": "http-server ./webapp",
+    "FE-run-theme-builder": "node ./bin/theme-builder.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/Kellojo/UI5-Roles#readme",
   "dependencies": {
+    "chokidar": "^3.3.0",
     "http-server": "^0.11.1",
     "less": "^3.10.3"
   }
