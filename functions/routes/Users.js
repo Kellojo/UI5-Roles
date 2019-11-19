@@ -18,12 +18,14 @@ const RolesController = require("../controller/Roles");
  * @public 
  */
 router.get("/", async (request, response, next) => {
-    var aUsers = UserController.getAllUsers(),
+    var oAllUsers = UserController.getAllUsers(request.query.nextPageToken),
         aRoles = RolesController.getAllRoles();
+    oAllUsers = await oAllUsers;
 
     response.json({
-        results: await aUsers,
-        allRoles: await aRoles
+        results: oAllUsers.users,
+        nextPageToken: oAllUsers.nextPageToken,
+        allRoles: await aRoles,
     });
 });
 
@@ -31,40 +33,26 @@ router.get("/", async (request, response, next) => {
 
 router.post("/:userId/roles/", async (request, response, next) => {
     var sUserId = request.params.userId,
-        oUser = request.body.user,
+        oUser = request.body,
         oRoles = {};
-    if (!sUserId) {
-        response.statusCode = 500;
-        response.statusMessage = "User id has to be valid";
-        response.send();
-        return;
-    }
-    if (!oUser) {
-        response.statusCode = 500;
-        response.statusMessage = "User has to be valid";
-        response.send();
+    if (!sUserId || !oUser) {
+        response.status(400).send();
         return;
     }
 
     //get all available roles and filter the ones sent from the client
-    var oQuerySnapshot = await admin.firestore().collection("roles").get(),
-        aRoles = [];
-    
-    oQuerySnapshot.docs.forEach((oDocument) => {
-        var oRole = oDocument.data();
-        oRole.id = oDocument.id;
-        aRoles.push(oRole);
-    });
-
+    var aRoles = await RolesController.getAllRoles();
 
     //validate client roles
-    /*aRoles.forEach((oRole) => {
-        var sRoleId = oRole.id;
+    for (let i = 0; i < aRoles.length; i++) {
+        const oRole = aRoles[i],
+            sRoleId = oRole.id,
+            bHasRole = !!(oUser.roles && oUser.roles[sRoleId] && oUser.roles[sRoleId].hasRole);
 
         oRoles[sRoleId] = {
-            hasRole: oUser.roles[sRoleId],      //security check should go here
+            hasRole: bHasRole, //security check should go here
         }
-    });*/
+    }
 
 
     //save client roles
@@ -73,7 +61,10 @@ router.post("/:userId/roles/", async (request, response, next) => {
         lastModifiedAt: new Date(),
     },
         oQuerySnapShot = await admin.firestore().collection("users").doc(sUserId).set(oUserDocument);
-    response.json(oUserDocument);
+
+    oUser.roles = oUserDocument.roles;
+    oUser.lastModifiedAt = oUserDocument.lastModifiedAt;
+    response.json(oUser);
 });
 
 
