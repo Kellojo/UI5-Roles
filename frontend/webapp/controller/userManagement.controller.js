@@ -1,5 +1,5 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "./ControllerBase",
     "sap/ui/model/json/JSONModel",
     "com/app/manager/Formatter",
     "sap/m/MessageToast",
@@ -14,6 +14,8 @@ sap.ui.define([
     }),
         ControllerProto = Controller.prototype;
 
+    ControllerProto.name = "";
+
     
     ControllerProto.onInit = function() {
         this.m_oUserTable = this.getView().byId("idUserTable");
@@ -26,7 +28,9 @@ sap.ui.define([
         });
         this.m_oUsersModel.setSizeLimit(9999999);
         this.getView().setModel(this.m_oUsersModel);
+    };
 
+    ControllerProto.onPageEnter = function() {
         this.loadUsers();
     };
 

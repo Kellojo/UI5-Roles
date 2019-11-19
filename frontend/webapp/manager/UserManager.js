@@ -13,7 +13,9 @@ sap.ui.define([
             },
             events: {
                 authStateChanged: {
-                    
+                    parameters: {
+                        user: {type: "object"}
+                    }
                 }
             }
         }
@@ -46,7 +48,7 @@ sap.ui.define([
         this.setProperty("currentUser", oUser);
 
         this.fireAuthStateChanged({
-
+            user: oUser
         });
     };
 
@@ -54,18 +56,17 @@ sap.ui.define([
     // User Specific Functions
     // -----------------------------
 
-    ManagerProto.login = function login(email, password, fnThen, error, complete) {
-        var oRequest = firebase.auth().signInWithEmailAndPassword(email, password);
-
-        oRequest.then(fnThen);
-        oRequest.catch(this.getOwnerComponent().getRestClient().generateErrorHandler(error));
-        oRequest.finally(complete);
+    ManagerProto.login = function(email, password, then, error, complete) {
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(then)
+            .catch(this.getOwnerComponent().getRestClient()._generateErrorHandler(error))
+            .finally(complete);
     };
 
-    ManagerProto.registerUser = function (email, password, fnThen, error, complete) {
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-            .catch(this.getOwnerComponent().getRestClient().generateErrorHandler(error))
-            .then(fnThen)
+    ManagerProto.signUp = function(email, password, then, error, complete) {
+         firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(then)
+            .catch(this.getOwnerComponent().getRestClient()._generateErrorHandler(error))
             .finally(complete);
     };
 
@@ -82,7 +83,7 @@ sap.ui.define([
             if (typeof mParameters.success === "function") {
                 mParameters.success();
             }
-        }).catch(this.getOwnerComponent().getRestClient().generateErrorHandler(mParameters.error));
+        }).catch(this.getOwnerComponent().getRestClient()._generateErrorHandler(mParameters.error));
     };
 
     ManagerProto.isLoggedIn = function() {

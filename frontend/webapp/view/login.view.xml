@@ -1,0 +1,70 @@
+<mvc:View
+	controllerName="com.app.controller.login"
+	xmlns="sap.m"
+    xmlns:k="kellojo.m"
+	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    height="100%"
+    width="100%"
+    id="idAppView">
+
+    <k:Page showHeader="false">
+
+        <NavContainer id="idNavContainer" class="kellojoM-login-navContainer">
+
+            <k:Wrapper id="idLoginPage" class="kellojoM-login-page">
+                <k:Wrapper class="kellojoM-login-container">
+                    <Text text="{i18n>login-title}" class="kellojoM-login-title" />
+
+                    <k:Wrapper class="kellojoM-login-loginForm" busy="{/isSignInBusy}" busyIndicatorDelay="300">
+                        <Input placeholder="{i18n>login-emailPlaceholder}" value="{/email}" type="Email" valueLiveUpdate="true"/>
+                        <k:Divider onlyBorder="true"/>
+                        <Input placeholder="{i18n>login-passwordPlaceholder}" value="{/password}" type="Password" valueLiveUpdate="true"/>
+                    </k:Wrapper>
+
+                    <k:Wrapper class="kellojoM-login-actionContainer">
+                        <Link text="{i18n>login-forgotPassword}"/>
+                        <Button text="{i18n>login-signIn}" class="kellojoM-login-rightAction" press="onSignInButtonPress"/>
+                    </k:Wrapper>
+
+                    <k:Wrapper class="kellojoM-login-secondaryActionContainter">
+                        <Link text="{i18n>login-createAccountQuestion}" press="onToRegistrationsLinkPress"/>
+                    </k:Wrapper>
+                </k:Wrapper>
+            </k:Wrapper>
+
+            <k:Wrapper id="idRegistrationsPage" class="kellojoM-login-page">
+                <k:Wrapper class="kellojoM-login-container">
+                    <Text text="{i18n>registration-title}" class="kellojoM-login-title" />
+
+                    <k:Wrapper id="idSignUpForm" class="kellojoM-login-loginForm" busy="{/isSignUpBusy}" busyIndicatorDelay="300">
+                        <Input placeholder="{i18n>login-emailPlaceholder}" value="{/email}" valueState="{/signUpEmailValueState}" showValueStateMessage="false" type="Email" 
+                            valueLiveUpdate="true" liveChange="onValidateRegistration"/>
+
+                        <k:Divider onlyBorder="true"/>
+
+                        <Input placeholder="{i18n>login-passwordPlaceholder}" value="{/password}" valueState="{/signUpPasswordValueState}" showValueStateMessage="false"  type="Password" 
+                            valueLiveUpdate="true"  liveChange="onValidateRegistration"/>
+
+                        <k:Divider onlyBorder="true"/>
+
+                        <Input placeholder="{i18n>login-passwordRepeatPlaceholder}" value="{/password1}" valueState="{/signUpPasswordValueState}" showValueStateMessage="false" type="Password" 
+                            valueLiveUpdate="true" liveChange="onValidateRegistration"/>
+                    </k:Wrapper>
+
+                    <k:Wrapper class="kellojoM-login-actionContainer">
+                        <Button text="{i18n>registration-signUp}" press="onSignUpButtonPress"/>
+                    </k:Wrapper>
+
+                    <k:Wrapper class="kellojoM-login-secondaryActionContainter">
+                        <Link text="{i18n>registration-loginQuestion}" press="onToLoginLinkPress"/>
+                    </k:Wrapper>
+                </k:Wrapper>
+            </k:Wrapper>
+
+        </NavContainer>
+
+    </k:Page>
+
+</mvc:View>

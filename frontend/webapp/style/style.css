@@ -3,6 +3,10 @@
   height: 1rem;
   background-color: #f7f7f7;
 }
+.kellojoM-divider-flg-onlyBorder {
+  height: 0px;
+  border-bottom: 1px solid #e5e5e5;
+}
 .kellojoM-page {
   width: 100%;
   height: 100%;
@@ -17,7 +21,7 @@
   flex-shrink: 0;
   position: sticky;
   top: 0px;
-  z-index: 10;
+  z-index: 11;
   padding: 1rem 2rem;
   background-color: #f7f7f7;
   display: flex;
@@ -49,14 +53,22 @@
 }
 .kellojoM-page .kellojoM-page-content {
   flex-grow: 1;
-  padding: 1rem 2rem;
+  padding: 1rem 2rem 2rem 2rem;
+}
+.kellojoM-page.kellojoM-page-flg-scrollStarted .kellojoM-page-header {
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
 }
 .sap-phone .kellojoM-page .kellojoM-page-header {
   flex-direction: column;
-  padding: 1rem;
+  padding: 0px;
+  background-color: #395E66;
 }
 .sap-phone .kellojoM-page .kellojoM-page-header > div {
   max-width: 100%;
+}
+.sap-phone .kellojoM-page .kellojoM-page-header .sapMText,
+.sap-phone .kellojoM-page .kellojoM-page-header .sapMLabel {
+  color: white;
 }
 .sap-phone .kellojoM-page .kellojoM-page-header .kellojoM-page-header-mainAction .sapMSF {
   max-width: 100%;
@@ -71,15 +83,49 @@
   display: flex;
   flex-direction: column;
 }
+.sap-phone .kellojoM-SearchField {
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  background-color: white;
+}
+.sap-phone .kellojoM-SearchField .sapMSFF {
+  border-radius: 5px;
+  border: none;
+  background-color: #e9e9ea;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.sap-phone .kellojoM-SearchField .sapMSFS {
+  left: 0px;
+}
+.sap-phone .kellojoM-SearchField .sapMSFR {
+  right: 0px;
+}
 .kellojoM-sectionHeader {
   padding: 0.5rem 1rem;
   border-bottom: 1px solid #e5e5e5;
+}
+.kellojoM-tableBusyIndicator {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.kellojoM-tableBusyIndicator .kellojoM-tableBusyIndicator-busyIndicator {
+  width: 48px;
+  margin-right: 1rem;
+}
+.kellojoM-tableBusyIndicator .kellojoM-tableBusyIndicator-textContainer {
+  display: flex;
+  flex-direction: column;
 }
 .kellojoM-tableActions {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 0.5rem 1rem;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
   background-color: white;
   border: 1px solid #e5e5e5;
   border-bottom: none;
@@ -104,8 +150,117 @@
 .app-errorMessageContainer .sapMMsgStrip {
   margin-bottom: 0.25rem;
 }
+.kellojoM-login-page:not(.sapMNavItemHidden) {
+  width: 100%;
+  height: 100%;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.kellojoM-login-container {
+  display: flex !important;
+  flex-direction: column;
+  max-width: 300px;
+  width: 100%;
+}
+.kellojoM-login-title {
+  margin-bottom: 1rem;
+  align-self: center;
+  font-size: 1.5rem !important;
+}
+.kellojoM-login-loginForm {
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+}
+.kellojoM-login-loginForm .sapMInput {
+  height: 2.625rem !important;
+  margin: 0px !important;
+  padding: 0px !important;
+}
+.kellojoM-login-loginForm .sapMInput .sapMInputBaseContentWrapper {
+  height: 2.625rem !important;
+  border: none;
+  outline: none;
+}
+.kellojoM-login-loginForm .sapMInput .sapMInputBaseContentWrapper .sapMInputBaseInner {
+  padding: 0px 1.5rem;
+}
+.kellojoM-login-loginForm .sapMInput .sapMInputBaseContentWrapperError .sapMInputBaseInner {
+  color: #bb0000;
+}
+.kellojoM-login-loginForm .sapMInput .sapMInputBaseContentWrapperError ::placeholder {
+  color: #bb0000;
+}
+.kellojoM-login-loginForm-flg-error {
+  animation: kellojoM-login-loginForm-shake 0.5s;
+  animation-iteration-count: 1;
+}
+@keyframes kellojoM-login-loginForm-shake {
+  0% {
+    transform: translate(1px, 0px);
+  }
+  10% {
+    transform: translate(-1px, 0px);
+  }
+  20% {
+    transform: translate(-3px, 0px);
+  }
+  30% {
+    transform: translate(3px, 0px);
+  }
+  40% {
+    transform: translate(1px, 0px);
+  }
+  50% {
+    transform: translate(-1px, 0px);
+  }
+  60% {
+    transform: translate(-3px, 0px);
+  }
+  70% {
+    transform: translate(3px, 0px);
+  }
+  80% {
+    transform: translate(-1px, 0px);
+  }
+  90% {
+    transform: translate(1px, 0px);
+  }
+  100% {
+    transform: translate(1px, 0px);
+  }
+}
+.kellojoM-login-actionContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0.5rem;
+}
+.kellojoM-login-actionContainer .kellojoM-login-rightAction {
+  margin-left: auto;
+}
+.kellojoM-login-secondaryActionContainter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+  margin: 1rem auto;
+  border-top: 1px solid #e5e5e5;
+}
+.kellojoM-login-secondaryActionContainter .sapMLnk {
+  color: #0a6ed17d;
+}
+.kellojoM-login-secondaryActionContainter .sapMLnk:focus {
+  color: #0a6ed17d !important;
+}
 .sapMList {
   border: 1px solid #e5e5e5;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
 }
 .sapMList .sapMListShowSeparatorsAll .sapMLIBShowSeparator:first-child > td {
   border-top: none;
@@ -124,4 +279,7 @@
 }
 .sapMList .sapMListItems .sapMListTblRow:not(.sapMLIBActive) .kellojoM-lightLabel {
   color: #6a6d70;
+}
+.sap-phone .sapMList {
+  border: none;
 }

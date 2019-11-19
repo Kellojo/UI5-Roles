@@ -50,14 +50,17 @@
 
             //attach auth state changed handler
             firebase.auth().onAuthStateChanged(function() {
-                sap.ui.getCore().attachInit(function () {
-                    new sap.ui.core.ComponentContainer({
-                        name: "com.app",
-                        manifest: true,
-                        height: "100%",
-                        id: "mainComponent"
-                    }).placeAt("content");
-                });
+                if (!this.m_bHasComponentAlreadyBeenInitialized) {
+                    this.m_bHasComponentAlreadyBeenInitialized = true;
+                    sap.ui.getCore().attachInit(function () {
+                        new sap.ui.core.ComponentContainer({
+                            name: "com.app",
+                            manifest: true,
+                            height: "100%",
+                            id: "mainComponent"
+                        }).placeAt("content");
+                    });
+                }
             });
         </script>
 

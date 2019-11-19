@@ -33,7 +33,8 @@ sap.ui.define([
 
     ComponentProto.init = function () {
         UIComponent.prototype.init.apply(this, arguments);
-        this.getRouter().initialize();
+        var oRouter = this.getRouter();
+        oRouter.initialize();
 
         //init beans
         Config.Beans.forEach(function(sBean) {
@@ -88,19 +89,38 @@ sap.ui.define([
             this.attachSwipeRight(this.navBack.bind(this));
         }
 
-        //remove splath screen
-        var oLoadingScreenElement = jQuery("#idLoadingScreen");
-        oLoadingScreenElement.fadeOut(300, () => {
-            oLoadingScreenElement.remove();
-        });
+        this.getUserManager().attachAuthStateChanged(this._onAuthStateChange.bind(this));
     };
 
     /**
      * Handler for the Authentication Change
      * @protected
      */
-    ComponentProto.onAuthStateChange = function(oUser) {
+    ComponentProto._onAuthStateChange = function(oEvent) {
+        var oUser = oEvent.getParameter("user");
         jQuery.sap.log.info("Auth State Changed (" + !!oUser + ")");
+
+        //remove splath screen
+        var oLoadingScreenElement = jQuery("#idLoadingScreen");
+        oLoadingScreenElement.fadeOut(300, () => {
+            oLoadingScreenElement.remove();
+        });
+
+        this.verifyCurrentRoute();
+        this.getRouter().attachRouteMatched(this.verifyCurrentRoute.bind(this));
+    };
+
+    /**
+     * Called when a route is matched
+     * @public
+     */
+    ComponentProto.verifyCurrentRoute = function() {
+        var bIsLoggedIn = this.getUserManager().isLoggedIn();
+        
+        //check routing
+        if (!bIsLoggedIn) {
+            this.toLogin();
+        }
     };
 
     // -------------------------------------
@@ -149,10 +169,11 @@ sap.ui.define([
     // Navigation
     // -------------------------------------
 
-    ComponentProto.toXYZ = function (sTableId) {
-        this.getRouter().navTo("xyz", {
-            
-        });
+    ComponentProto.toLogin = function () {
+        this.getRouter().navTo("login", {});
+    };
+    ComponentProto.toUserManagement = function () {
+        this.getRouter().navTo("userManagement", {});
     };
 
     ComponentProto.openUserManagementDialog = function (oSettings) {
