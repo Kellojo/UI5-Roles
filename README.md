@@ -6,6 +6,7 @@ The app also showcases how the component approach can be used in combination wit
 
 
 ## ⚙️ Features
+- Infinite scrolling in UI5
 - User authentication (sign in & sign up)
 - User management
   - listing users
